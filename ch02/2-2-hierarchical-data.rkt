@@ -38,6 +38,42 @@
     (= (modulo y 2) (modulo x 2)))
   (cons x (filter p xs)))
 
+;2.21
+(define (square x) (* x x))
+(define (square-list1 items)
+  (if (null? items)
+    '()
+    (cons (square (car items)) (square-list1 (cdr items)))))
+(define (square-list2 items)
+  (map square items))
+
+;2.22
+(define (square-list3 items)
+  (define (iter things answer)
+    (if (null? things)
+      answer
+      (iter (cdr things)
+            (cons (square (car things)) answer))))
+  (iter items '()))
+; Results in reverse order because the procedure cons'es the first square to answer, then the second square, etc
+
+(define (square-list4 items)
+  (define (iter things answer)
+    (if (null? things)
+      answer
+      (iter (cdr things)
+            (cons answer (square (car things))))))
+  (iter items '()))
+; Final result will not be a list, as nil is the first element of the cons chain, not the last
+
+;2.23
+(define (for-each f xs)
+  (if (null? xs)
+    #t
+    (begin
+      (f (car xs))
+      (for-each f (cdr xs)))))
+
 ;2.25
 (define a '(1 3 (5 7) 9))
 (define b '((7)))
