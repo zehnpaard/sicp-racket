@@ -102,3 +102,49 @@
       (else
        (fringe-acc (cdr xt) (fringe-acc (car xt) ys)))))
   (reverse (fringe-acc xt '())))
+
+;2.30
+(define (square-tree t)
+  (cond
+    ((null? t) t)
+    ((pair? t) (cons (square-tree (car t))
+                     (square-tree (cdr t))))
+    (else (square t))))
+
+;using map
+(define (square-tree-map t)
+  (define (square-subtree t)
+    (if (pair? t)
+      (square-tree-map t)
+      (square t)))
+  (map square-subtree t))
+
+;2.31
+(define (tree-map f t)
+  (cond
+    ((null? t) t)
+    ((pair? t) (cons (tree-map f (car t))
+                     (tree-map f (cdr t))))
+    (else (f t))))
+
+;using map
+(define (tree-map-map f t)
+  (define (subtree-map t)
+    (if (pair? t)
+      (tree-map-map f t)
+      (f t)))
+  (map subtree-map t))
+
+;2.32
+(define (subsets xs)
+  (if (null? xs)
+    (list xs)
+    (let ((rs          (subsets (cdr xs)))
+          (cons-car-xs (lambda (s)
+                         (cons (car xs) s))))
+      (append rs (map cons-car-xs rs)))))
+
+;Proof by Induction
+;Base case '() -> '(())
+;Given all subsets of (cdr xs), the subsets of xs are either those same subsets or those subsets with (car xs) cons'ed
+;(Any arbitrary subset of xs either does or does not include (car xs), and the rest is a subset of (cdr xs))
