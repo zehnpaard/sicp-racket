@@ -25,6 +25,16 @@
                          (count-leaves x)))
                    t)))
 
+(define (count-leaves2 t)
+  (accumulate + 0
+              (map (lambda (x)
+                     (length (flatten x)))
+                   t)))
+
+(define (count-leaves3 t)
+  (accumulate (lambda (x y) (+ (length x) y)) 0
+              (map flatten t)))
+
 ;2.36
 (define (accumulate-n op init seqs)
   (if (null? (car seqs))
