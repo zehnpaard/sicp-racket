@@ -20,6 +20,27 @@
                  (- (upper-bound x)
                     (lower-bound y))))
 
+;2.9
+(define (width i)
+  (- (upper-bound i)
+     (lower-bound i)))
+
+;(width (add-interval x y))
+;(width (make-interval (+ (lower-bound x) (lower-bound y)) (+ (upper-bound x) (upper-bound y))))
+;(- (+ (upper-bound x) (upper-bound y)) (+ (lower-bound x) (lower-bound y)))
+;(- (+ a b) (+ c d)) -> (+ (- a c) (- b d))
+;(+ (- (upper-bound x) (lower-bound-x)) (- (upper-bound y) (lower-bound y)))
+;(+ (width x) (width y))
+
+;(width (sub-interval x y))
+;(width (make-interval (- (lower-bound x) (upper-bound y)) (- (upper-bound x) (lower-bound y))))
+;(- (- (upper-bound x) (lower-bound y)) (- (lower-bound x) (upper-bound y)))
+;(- (- a b) (- c d)) -> (+ (- (- a b) c) d) -> (+ (- (- a c) b) d) -> (- (- a c) (- b d))
+;(- (- (upper-bound x) (lower-bound x)) (- (lower-bound y) (upper-bound y)))
+;(+ (- (upper-bound x) (lower-bound x)) (- (upper-bound y) (lower-bound y)))
+;(+ (width x) (width y))
+
+
 ;2.10
 (define (div-interval x y)
   (if (and (>= 0 (lower-bound y))
