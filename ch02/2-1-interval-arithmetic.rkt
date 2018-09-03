@@ -97,3 +97,17 @@
 (define (percent i)
   (* 100 (/ (width i) (center i))))
 
+;2.13
+; Assuming intervals a, b spanning positive numbers with proportional widths x, y
+; Multiplied interval c has:
+;  lower bound: (lower-bound a) * (lower-bound b)
+;               (a * (1 - x)) * (b * (1 - y))
+;               (a * b * (1 - x) * (1 - y))
+;               (a * b * (1 - (x + y) + (x * y)))
+;  upper bound: (upper-bound a) * (upper-bound b)
+;               (a * (1 + x)) * (b * (1 + y))
+;               (a * b * (1 + x) * (1 + y))
+;               (a * b * (1 + (x + y) + (x * y)))
+; Assuming that x and y are small, x * y is even smaller and can be ignored in an approximation
+; (a * b * (1 - (x + y))) ~ (a * b * (1 + (x + y)))
+; Proportional width is approximately x + y, around approximate center of a * b
