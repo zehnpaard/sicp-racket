@@ -88,8 +88,7 @@
   (make-interval (- c w) (+ c w)))
 (define (center i)
   (/ (+ (lower-bound i) (upper-bound i)) 2))
-(define (width i)
-  (/ (- (upper-bound i) (lower-bound i)) 2))
+
 
 (define (make-center-percent c p)
   (let ((w (* c (/ p 100))))
@@ -111,3 +110,27 @@
 ; Assuming that x and y are small, x * y is even smaller and can be ignored in an approximation
 ; (a * b * (1 - (x + y))) ~ (a * b * (1 + (x + y)))
 ; Proportional width is approximately x + y, around approximate center of a * b
+
+;2.14
+(define (add-interval x y)
+  (make-interval (+ (lower-bound x) (lower-bound y))
+                 (+ (upper-bound x) (upper-bound y))))
+
+(define (par1 r1 r2)
+  (div-interval (mul-interval r1 r2)
+                (add-interval r1 r2)))
+(define (par2 r1 r2)
+  (let ((one (make-interval 1 1)))
+    (div-interval one
+                  (add-interval (div-interval one r1)
+                                (div-interval one r2)))))
+
+(define interval1
+  (make-center-percent 10 2))
+(define interval2
+  (make-center-percent 15 3))
+;> (par1 interval1 interval2)
+;'(5.559064327485381 . 6.471868583162218)
+;> (par2 interval1 interval2)
+;'(5.855852156057495 . 6.143859649122806)
+
