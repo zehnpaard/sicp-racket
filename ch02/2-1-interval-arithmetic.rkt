@@ -142,3 +142,16 @@
 ; The tighter bound given by par1 is  correct, as the bounds for par1 assume that the variables can assume
 ; the value of different bounds depending on its position in the formula, which is not valid
 
+;2.16
+; As explained in 2.15, a variable occurring repeatedly in cancellable positions changes the position of the bounds
+; because evaluating arithmetic expressions locally means that the evaluation allows for the same variable to take
+; different sides of the upper/lower bounds at different parts of the formula
+; If the evaluation strategy is to perform atomic expression evaluations locally and then aggregate up, then this is
+; inevitable, and the possibility of differing results for equivalent arithmetic expressions can not be eliminated
+; Some kind of globally context-aware evaluation can solve this
+; One method is to evaluate the whole expression, substituting each variable with either the upper bound or the
+; lower bound.  This results in 2^(# of variables) possible results.  The lower bound is the min, the upper bound is
+; the max of these possible results.
+; This solution is inefficient, as the number of calculations required grows exponentially with the number of variables.
+; Another method is to use symbollic manipulation to convert equivalent arithmetic expressions to a single identical
+; canonical representation.
