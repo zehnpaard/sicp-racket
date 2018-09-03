@@ -134,3 +134,11 @@
 ;> (par2 interval1 interval2)
 ;'(5.855852156057495 . 6.143859649122806)
 
+;2.15
+; Eva Lu Ator is correct
+; Repeating a variable in the formula always leads to an increase in the width of the resulting interval
+; even when the repetition is arithmetically equivalent
+; As such, par2 (with the variables occurring just once) leads to a tighter bound than par1
+; The tighter bound given by par1 is  correct, as the bounds for par1 assume that the variables can assume
+; the value of different bounds depending on its position in the formula, which is not valid
+
