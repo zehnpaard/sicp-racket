@@ -69,3 +69,9 @@
         (iter (op acc (car seq)) (cdr seq))))
   (iter e seq))
 
+;2.39
+(define fold-right accumulate)
+(define (reverse seq)
+  (fold-right (lambda (x y) (append y (list x))) '() seq))
+(define (reverse2 seq)
+  (fold-left (lambda (x y) (cons y x)) '() seq))
