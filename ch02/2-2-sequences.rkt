@@ -69,6 +69,20 @@
         (iter (op acc (car seq)) (cdr seq))))
   (iter e seq))
 
+; (foldr / 1 '(1 2 3))
+; 3/2
+; (foldl / 1 '(1 2 3))
+; 1/6
+; (foldr list '() '(1 2 3))
+; (1 (2 (3 ())))
+; (foldl list '() '(1 2 3))
+; (((() 1) 2) 3)
+
+;Either:
+; op is commutative s.t (a op b) = (b op a) -> (a op b op e) = (e op a op b)
+; or
+; op and e form a monoid, s.t. (a op e) = a -> (a op b op e) = (e op a op b)
+
 ;2.39
 (define fold-right accumulate)
 (define (reverse seq)
