@@ -1,8 +1,6 @@
 #lang racket
 (define accumulate foldr)
 
-(define (map f seq)
-  (accumulate (lambda (x y) (cons (f x) y)) '() seq))
 
 (define (append seq1 seq2)
   (accumulate cons seq2 seq1))
@@ -41,3 +39,25 @@
       '()
       (cons (accumulate op init (map car seqs))
             (accumulate-n op init (map cdr seqs)))))
+
+;2.37
+(define (dot-product v w)
+  (accumulate + 0 (map * v w)))
+
+(define (matrix-*-vector m v)
+  (map (lambda (w) (dot-product v w)) m))
+
+(define (transpose m)
+  (accumulate-n cons '() m))
+
+(define (matrix-*-matrix m n)
+  (let ((cols (transpose n)))
+    (map (lambda (v) (matrix-*-vector cols v)) m)))
+
+(define mat '((1 2 3 4) (4 5 6 6) (6 7 8 9)))
+(define mat2 '((1 2 3 4) (4 5 6 6) (6 7 8 9) (1 1 1 1)))
+(define mat3 '((1 0 0 0) (0 1 0 0) (0 0 1 0) (0 0 0 1)))
+(define mat4 '((1 0 0) (0 1 0) (0 0 1) (0 0 0)))
+
+(define mat5 '((1 2) (1 0)))
+
