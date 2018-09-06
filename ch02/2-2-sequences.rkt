@@ -61,3 +61,11 @@
 
 (define mat5 '((1 2) (1 0)))
 
+;2.38
+(define (fold-left op e seq)
+  (define (iter acc seq)
+    (if (null? seq)
+        acc
+        (iter (op acc (car seq)) (cdr seq))))
+  (iter e seq))
+
