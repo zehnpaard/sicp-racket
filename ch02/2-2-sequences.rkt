@@ -89,3 +89,18 @@
   (fold-right (lambda (x y) (append y (list x))) '() seq))
 (define (reverse2 seq)
   (fold-left (lambda (x y) (cons y x)) '() seq))
+
+;2.40
+(define (enumerate-interval start end)
+  (if (> start end)
+    '()
+    (cons start (enumerate-interval (+ 1 start) end))))
+
+(define (flatmap f seq)
+  (accumulate append '() (map f seq)))
+
+(define (unique-pairs n)
+  (define (pairs-starting-with i)
+    (map (lambda (j) (list i j))
+         (enumerate-interval 1 (- i 1))))
+  (flatmap pairs-starting-with (enumerate-interval 1 n)))
