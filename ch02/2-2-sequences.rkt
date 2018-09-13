@@ -89,3 +89,46 @@
   (fold-right (lambda (x y) (append y (list x))) '() seq))
 (define (reverse2 seq)
   (fold-left (lambda (x y) (cons y x)) '() seq))
+
+;2.40
+(define (enumerate-interval start end)
+  (if (> start end)
+    '()
+    (cons start (enumerate-interval (+ 1 start) end))))
+
+(define (flatmap f seq)
+  (accumulate append '() (map f seq)))
+
+(define (unique-pairs n)
+  (define (pairs-starting-with i)
+    (map (lambda (j) (list i j))
+         (enumerate-interval 1 (- i 1))))
+  (flatmap pairs-starting-with (enumerate-interval 1 n)))
+
+;2.41
+(define (unique-triplets n)
+  (define (triplets-starting-with k)
+    (map (lambda (pair) (cons k pair))
+         (unique-pairs (- k 1))))
+  (flatmap triplets-starting-with (enumerate-interval 1 n)))
+
+(define (sum xs)
+  (accumulate + 0 xs))
+
+(define (sum-triplets n)
+  (filter (lambda (xs) (= n (sum xs))) (unique-triplets n)))
+
+;2.42
+(define (queen board-size)
+  (define (queen-cols k)
+    (if (= k 0)
+      (list empty-board)
+      (filter
+       (lambda (positions) (safe? k positions))
+       (flatmap
+        (lambda (rest-of-queens)
+          (map (lambda (new-row)
+                 (adjoin-position new-row k rest-of-queens))
+               (enumerate-interval 1 board-size)))
+        (queen-cols (- k 1))))))
+  (queen-cols board-size))
