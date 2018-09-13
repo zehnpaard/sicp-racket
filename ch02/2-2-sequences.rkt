@@ -104,3 +104,16 @@
     (map (lambda (j) (list i j))
          (enumerate-interval 1 (- i 1))))
   (flatmap pairs-starting-with (enumerate-interval 1 n)))
+
+;2.41
+(define (unique-triplets n)
+  (define (triplets-starting-with k)
+    (map (lambda (pair) (cons k pair))
+         (unique-pairs (- k 1))))
+  (flatmap triplets-starting-with (enumerate-interval 1 n)))
+
+(define (sum xs)
+  (accumulate + 0 xs))
+
+(define (sum-triplets n)
+  (filter (lambda (xs) (= n (sum xs))) (unique-triplets n)))
