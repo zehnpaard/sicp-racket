@@ -143,3 +143,11 @@
   (zero?
    (count (lambda (x) (= x (car positions)))
      (cdr positions))))
+
+; not cheating but possibly inefficient
+(define (safe?* k positions)
+  (let ((k-col (- (length positions) k)))
+    (let ((k-val (list-ref positions k-col)))
+      (= 1
+       (count (lambda (x) (= x k-val))
+         positions)))))
