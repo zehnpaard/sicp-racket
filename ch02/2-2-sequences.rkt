@@ -137,3 +137,9 @@
 
 (define (adjoin-position row col rest)
   (cons row rest))
+
+; slightly cheating (not using k)
+(define (safe? k positions)
+  (zero?
+   (count (lambda (x) (= x (car positions)))
+     (cdr positions))))
