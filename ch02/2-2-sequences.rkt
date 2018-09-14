@@ -132,3 +132,34 @@
                (enumerate-interval 1 board-size)))
         (queen-cols (- k 1))))))
   (queen-cols board-size))
+
+(define empty-board '())
+
+(define (adjoin-position row col rest)
+  (cons row rest))
+
+; slightly cheating (not using k)
+(define (safe? k positions)
+  (define (check xs)
+    (zero?
+     (count (lambda (x) (= x (car xs)))
+       (cdr xs))))
+  (let ((diag1 (map (lambda (n) (+ n (list-ref positions n)))
+                    (enumerate-interval 0 (- (length positions) 1))))
+        (diag2 (map (lambda (n) (- n (list-ref positions n)))
+                    (enumerate-interval 0 (- (length positions) 1)))))
+    (and (check positions) (check diag1) (check diag2))))
+
+; not cheating but possibly inefficient
+(define (safe?* k positions)
+  (define (check k xs)
+    (let ((k-col (- (length xs) k)))
+      (let ((k-val (list-ref xs k-col)))
+        (= 1
+         (count (lambda (x) (= x k-val))
+           xs)))))
+  (let ((diag1 (map (lambda (n) (+ n (list-ref positions n)))
+                    (enumerate-interval 0 (- (length positions) 1))))
+        (diag2 (map (lambda (n) (- n (list-ref positions n)))
+                    (enumerate-interval 0 (- (length positions) 1)))))
+    (and (check k positions) (check k diag1) (check k diag2))))
