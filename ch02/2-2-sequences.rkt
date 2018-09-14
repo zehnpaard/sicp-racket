@@ -152,8 +152,14 @@
 
 ; not cheating but possibly inefficient
 (define (safe?* k positions)
-  (let ((k-col (- (length positions) k)))
-    (let ((k-val (list-ref positions k-col)))
-      (= 1
-       (count (lambda (x) (= x k-val))
-         positions)))))
+  (define (check k xs)
+    (let ((k-col (- (length xs) k)))
+      (let ((k-val (list-ref xs k-col)))
+        (= 1
+         (count (lambda (x) (= x k-val))
+           xs)))))
+  (let ((diag1 (map (lambda (n) (+ n (list-ref positions n)))
+                    (enumerate-interval 0 (- (length positions) 1))))
+        (diag2 (map (lambda (n) (- n (list-ref positions n)))
+                    (enumerate-interval 0 (- (length positions) 1)))))
+    (and (check k positions) (check k diag1) (check k diag2))))
