@@ -134,3 +134,6 @@
   (queen-cols board-size))
 
 (define empty-board '())
+
+(define (adjoin-position row col rest)
+  (cons row rest))
