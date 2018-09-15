@@ -186,3 +186,14 @@
 
 ; The reason for the inefficiency is that for each column k,
 ; (queen-cols k-1) is being calculated once for every row
+
+; Assuming
+; - Board size n * n
+; - (queen n) takes time T
+; - (queen-cols k-1) takes t times more for queen* than for queen
+
+; Then
+; (queen-cols k) takes n * t times more for queen* than for queen
+; (queen-cols 0) takes between 1 to n times more for queen* than for queen
+; t is between (n ** (k - 2)) and (n ** (k - 1))
+; (queen* n) takes between (n ** (n-1))T and (n ** n)T
