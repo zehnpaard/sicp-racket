@@ -183,3 +183,6 @@
 
 ; NB On modern PCs, (queen 8) is instantaneous while (queen* 6) takes maybe 1 second
 ; (queen* 8) takes a very long time
+
+; The reason for the inefficiency is that for each column k,
+; (queen-cols k-1) is being calculated once for every row
