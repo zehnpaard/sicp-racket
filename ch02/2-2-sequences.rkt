@@ -163,3 +163,23 @@
         (diag2 (map (lambda (n) (- n (list-ref positions n)))
                     (enumerate-interval 0 (- (length positions) 1)))))
     (and (check k positions) (check k diag1) (check k diag2))))
+
+
+; 2.43
+
+(define (queen* board-size)
+  (define (queen-cols k)
+    (if (= k 0)
+      (list empty-board)
+      (filter
+       (lambda (positions) (safe? k positions))
+       (flatmap
+        (lambda (new-row)
+          (map (lambda (rest-of-queens)
+                 (adjoin-position new-row k rest-of-queens))
+               (queen-cols (- k 1))))
+        (enumerate-interval 1 board-size)))))
+  (queen-cols board-size))
+
+; NB On modern PCs, (queen 8) is instantaneous while (queen* 6) takes maybe 1 second
+; (queen* 8) takes a very long time
