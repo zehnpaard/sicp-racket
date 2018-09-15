@@ -163,3 +163,37 @@
         (diag2 (map (lambda (n) (- n (list-ref positions n)))
                     (enumerate-interval 0 (- (length positions) 1)))))
     (and (check k positions) (check k diag1) (check k diag2))))
+
+
+; 2.43
+
+(define (queen* board-size)
+  (define (queen-cols k)
+    (if (= k 0)
+      (list empty-board)
+      (filter
+       (lambda (positions) (safe? k positions))
+       (flatmap
+        (lambda (new-row)
+          (map (lambda (rest-of-queens)
+                 (adjoin-position new-row k rest-of-queens))
+               (queen-cols (- k 1))))
+        (enumerate-interval 1 board-size)))))
+  (queen-cols board-size))
+
+; NB On modern PCs, (queen 8) is instantaneous while (queen* 6) takes maybe 1 second
+; (queen* 8) takes a very long time
+
+; The reason for the inefficiency is that for each column k,
+; (queen-cols k-1) is being calculated once for every row
+
+; Assuming
+; - Board size n * n
+; - (queen n) takes time T
+; - (queen-cols k-1) takes t times more for queen* than for queen
+
+; Then
+; (queen-cols k) takes n * t times more for queen* than for queen
+; (queen-cols 0) takes between 1 to n times more for queen* than for queen
+; t is between (n ** (k - 2)) and (n ** (k - 1))
+; (queen* n) takes between (n ** (n-1))T and (n ** n)T
