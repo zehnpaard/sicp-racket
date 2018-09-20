@@ -36,3 +36,11 @@
   (lambda (p)
     (below (beside (bl p) (br p))
            (beside (tl p) (tr p)))))
+
+(define (split f1 f2)
+  (define (s p n)
+    (if (zero? n)
+      p
+      (let ((q (s p (- n 1))))
+        (f1 p (f2 q q)))))
+  s)
