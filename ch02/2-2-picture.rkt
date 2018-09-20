@@ -62,3 +62,14 @@
 (define (scale-vect v n)
   (make-vect (* n (xcor-vect v))
              (* n (ycor-vect v))))
+
+;2.47
+(define (origin-frame f)
+  (car f))
+(define (edge1-frame f)
+  (cadr f))
+
+(define (edge2-frame f)
+  (caddr f)) ; (list origin edge1 edge2)
+(define (edge2-frame* f)
+  (cddr f)) ; (cons origin (cons edge1 edge2))
