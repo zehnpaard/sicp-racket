@@ -18,3 +18,21 @@
     p
     (let ((q (up-split p (- n 1))))
       (below p (beside q q)))))
+
+(define (corner-split p n)
+  (if (zero? n)
+    p
+    (let ((u (up-split p (- n 1)))
+          (r (right-split p (- n 1))))
+      (beside (below p (beside u u))
+              (below (below r r) (corner-split p (- n 1)))))))
+
+(define (square-limit p n)
+  (let ((q (corner-split p n)))
+    (let ((h (beside (flip-horiz q) q)))
+      (below (flip-vert h) h))))
+
+(define (square-of-four tl tr bl br)
+  (lambda (p)
+    (below (beside (bl p) (br p))
+           (beside (tl p) (tr p)))))
