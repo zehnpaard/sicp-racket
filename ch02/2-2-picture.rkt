@@ -37,6 +37,7 @@
     (below (beside (bl p) (br p))
            (beside (tl p) (tr p)))))
 
+;2.45
 (define (split f1 f2)
   (define (s p n)
     (if (zero? n)
@@ -44,3 +45,20 @@
       (let ((q (s p (- n 1))))
         (f1 p (f2 q q)))))
   s)
+
+;2.46
+(define make-vect cons)
+(define xcor-vect car)
+(define ycor-vect cdr)
+
+(define (do-to-coords f)
+  (lambda (a b)
+    (make-vect (f (xcor-vect a) (xcor-vect b))
+               (f (ycor-vect a) (ycor-vect b)))))
+
+(define add-vect (do-to-coords +))
+(define sub-vect (do-to-coords -))
+
+(define (scale-vect v n)
+  (make-vect (* n (xcor-vect v))
+             (* n (ycor-vect v))))
