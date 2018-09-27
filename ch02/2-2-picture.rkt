@@ -73,3 +73,11 @@
   (caddr f)) ; (list origin edge1 edge2)
 (define (edge2-frame* f)
   (cddr f)) ; (cons origin (cons edge1 edge2))
+
+;2.48
+(define (make-segment start end)
+  (cons start end))
+
+(define start-segment car)
+(define end-segment cdr)
+
