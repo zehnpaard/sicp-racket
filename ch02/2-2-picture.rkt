@@ -63,7 +63,13 @@
   (make-vect (* n (xcor-vect v))
              (* n (ycor-vect v))))
 
+
 ;2.47
+(define make-frame list)
+(define (make-frame* origin edge1 edge2)
+  (cons origin (cons edge1 edge2)))
+
+
 (define (origin-frame f)
   (car f))
 (define (edge1-frame f)
@@ -73,3 +79,27 @@
   (caddr f)) ; (list origin edge1 edge2)
 (define (edge2-frame* f)
   (cddr f)) ; (cons origin (cons edge1 edge2))
+
+;2.48
+(define (make-segment start end)
+  (cons start end))
+
+(define start-segment car)
+(define end-segment cdr)
+
+;2.49
+;a
+(define (frame-painter frame)
+  (define (get-borders f)
+    (let ((origin (origin-frame f))
+          (edge1 (edge1-frame f))
+          (edge2 (edge2-frame f)))
+      (let ((point1 (add-vect origin edge1))
+            (point2 (add-vect origin edge2))
+            (corner (add-vect origin (add-vect edge1 edge2))))
+        (list
+         (make-segment origin point1)
+         (make-segment origin point2)
+         (make-segment point1 corner)
+         (make-segment point2 corner)))))
+  ((segments->painter (get-borders frame)) frame))
