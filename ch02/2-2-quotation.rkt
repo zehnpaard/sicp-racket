@@ -11,6 +11,8 @@
   (cond
     ((and (symbol? x) (symbol? y))
      (eq? x y))
+    ((and (number? x) (number? y))
+     (= x y))
     ((and (list? x) (list? y))
      (and (equal? (car x) (car y))
           (equal? (cdr x) (cdr y))))
