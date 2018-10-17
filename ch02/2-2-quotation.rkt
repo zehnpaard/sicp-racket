@@ -18,3 +18,10 @@
           (equal? (cdr x) (cdr y))))
     (else
      #f)))
+
+; 2.55
+; why is (car ''abc) -> 'quote ?
+; 'abc is short-hand for (quote abc)
+; ''abc is short-hand for (quote (quote abc)) = '(quote abc)
+; (car '(x y)) -> 'x
+; (car '(quote abc)) -> 'quote
