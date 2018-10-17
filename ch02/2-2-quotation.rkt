@@ -6,3 +6,13 @@
 (cdr '((x1 x2) (y1 y2))) ; '((y1 y2))
 (cadr '((x1 x2) (y1 y2))) ; '(y1 y2)
 
+; 2.54
+(define (equal? x y)
+  (cond
+    ((and (symbol? x) (symbol? y))
+     (eq? x y))
+    ((and (list? x) (list? y))
+     (and (equal? (car x) (car y))
+          (equal? (cdr x) (cdr y))))
+    (else
+     #f)))
