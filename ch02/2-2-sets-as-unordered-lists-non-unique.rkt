@@ -15,3 +15,7 @@
                (intersection-set (cdr set1) (set2))))
         (else
          (intersection-set (cdr set1) (set2)))))
+
+(define union-set append)
+
+;TODO discuss running time and trade-offs
