@@ -12,3 +12,15 @@
               ((< x2 x1)
                (intersection-set set1 (cdr set2)))))))
 
+;2.61
+(define (adjoin-set x set)
+  (if (null? set)
+      (list x)
+      (let ((y (car set)))
+        (cond ((= x y)
+               set)
+              ((< y x)
+               (cons y
+                (adjoin-set x (cdr set))))
+              ((< x y)
+               (cons x set))))))
