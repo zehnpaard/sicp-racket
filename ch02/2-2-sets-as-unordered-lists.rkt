@@ -39,4 +39,7 @@
          (adjoin-set (car set1)
                (union-set-b (cdr set1) set2)))))
 
+(define (union-set-c set1 set2)
+  (if (null? set1) set2
+      (union-set-c (cdr set1) (adjoin-set (car set1) set2))))
       
