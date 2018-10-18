@@ -29,3 +29,14 @@
         (else
          (cons (car set1)
                (union-set (cdr set1) (set2))))))
+
+(define (union-set-b set1 set2)
+  (cond ((null? set1)
+         set2)
+        ((null? set2)
+         set1)
+        (else
+         (adjoin-set (car set1)
+               (union-set-b (cdr set1) set2)))))
+
+      
