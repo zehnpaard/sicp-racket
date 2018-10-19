@@ -17,9 +17,9 @@
          '())
         ((element-of-set? (car set1) set2)
          (cons (car set1)
-               (intersection-set (cdr set1) (set2))))
+               (intersection-set (cdr set1) set2)))
         (else
-         (intersection-set (cdr set1) (set2)))))
+         (intersection-set (cdr set1) set2))))
 ; Running time upperbound of n * m
 ; where n, m are the lengths of the first and second inputs
 ; Previously also n * m, but n and m were upperbounded by # of unique elements
